@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --color-primary: #111827;
+    --color-accent: #facc15;
+    --color-warm-amber: #f59e0b;
+    --color-light-bg: #f9fafb;
+    --color-light-text: #374151;
+    --color-dark-bg: #0f172a;
+    --color-dark-text: #f9fafb;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in { animation: fadeIn 0.8s ease-out; }
+.animate-fade-up { animation: fadeUp 0.8s ease-out; }
+.animate-slide-up { animation: slideUp 0.6s ease-out; }
+.animate-scale-in { animation: scaleIn 0.5s ease-out; }
+
+.hero-bg {
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.7) 0%, rgba(17, 24, 39, 0.9) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="%230f172a"/><path d="M0,400 Q300,200 600,400 T1200,400 L1200,800 L0,800 Z" fill="%231f2937" opacity="0.4"/><path d="M0,600 Q400,450 800,600 T1200,600 L1200,800 L0,800 Z" fill="%23374151" opacity="0.3"/><circle cx="150" cy="120" r="60" fill="%23facc15" opacity="0.2"/><circle cx="900" cy="180" r="80" fill="%23f59e0b" opacity="0.2"/><circle cx="1050" cy="300" r="40" fill="%23111827" opacity="0.2"/><rect x="200" y="300" width="800" height="200" fill="%23facc15" opacity="0.05" rx="20"/><rect x="100" y="500" width="1000" height="100" fill="%23f59e0b" opacity="0.08" rx="15"/></svg>');
+    background-size: cover;
+    background-position: center;
+    filter: blur(1px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-warm-amber));
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-warm-amber), #d97706);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(250, 204, 21, 0.4);
+}
+
+.oauth-btn {
+    transition: all 0.3s ease;
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(250, 204, 21, 0.2);
+}
+
+.oauth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(250, 204, 21, 0.15);
+    border-color: rgba(250, 204, 21, 0.4);
+}
+
+.login-card {
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(250, 204, 21, 0.2);
+    box-shadow: 0 0 40px rgba(250, 204, 21, 0.1);
+}
+
+.input-field {
+    background: rgba(249, 250, 251, 0.1);
+    border: 1px solid rgba(250, 204, 21, 0.2);
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1);
+    background: rgba(249, 250, 251, 0.15);
+}
+
+.golden-glow {
+    position: relative;
+}
+
+.golden-glow::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(250, 204, 21, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.checkbox-custom {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(250, 204, 21, 0.3);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.checkbox-custom:checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.checkbox-custom:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: bold;
+}
