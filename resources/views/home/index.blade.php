@@ -616,41 +616,41 @@
         });
 
         // Search form functionality
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const location = document.getElementById('location').value;
-            const pickupDate = document.getElementById('pickup-date').value;
-            const returnDate = document.getElementById('return-date').value;
+        // document.querySelector('form').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        //     const location = document.getElementById('location').value;
+        //     const pickupDate = document.getElementById('pickup-date').value;
+        //     const returnDate = document.getElementById('return-date').value;
             
-            if (location && pickupDate && returnDate) {
-                // Create custom modal instead of alert
-                const modal = document.createElement('div');
-                modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
-                modal.innerHTML = `
-                    <div class="bg-primary p-8 rounded-2xl shadow-2xl max-w-md mx-4 glass-effect animate-bounce-in">
-                        <h3 class="text-2xl font-bold text-[#F5B800] mb-4">Search Results</h3>
-                        <p class="text-white mb-6">Searching for cars in ${location} from ${pickupDate} to ${returnDate}</p>
-                        <button onclick="this.parentElement.parentElement.remove()" class="bg-[#F5B800] text-primary font-bold px-6 py-3 rounded-xl hover:bg-yellow-400 transition-all duration-300">
-                            Close
-                        </button>
-                    </div>
-                `;
-                document.body.appendChild(modal);
-            } else {
-                const modal = document.createElement('div');
-                modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
-                modal.innerHTML = `
-                    <div class="bg-primary p-8 rounded-2xl shadow-2xl max-w-md mx-4 glass-effect animate-bounce-in">
-                        <h3 class="text-2xl font-bold text-red-400 mb-4">Missing Information</h3>
-                        <p class="text-white mb-6">Please fill in all search fields</p>
-                        <button onclick="this.parentElement.parentElement.remove()" class="bg-[#F5B800] text-primary font-bold px-6 py-3 rounded-xl hover:bg-yellow-400 transition-all duration-300">
-                            Close
-                        </button>
-                    </div>
-                `;
-                document.body.appendChild(modal);
-            }
-        });
+        //     if (location && pickupDate && returnDate) {
+        //         // Create custom modal instead of alert
+        //         const modal = document.createElement('div');
+        //         modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+        //         modal.innerHTML = `
+        //             <div class="bg-primary p-8 rounded-2xl shadow-2xl max-w-md mx-4 glass-effect animate-bounce-in">
+        //                 <h3 class="text-2xl font-bold text-[#F5B800] mb-4">Search Results</h3>
+        //                 <p class="text-white mb-6">Searching for cars in ${location} from ${pickupDate} to ${returnDate}</p>
+        //                 <button onclick="this.parentElement.parentElement.remove()" class="bg-[#F5B800] text-primary font-bold px-6 py-3 rounded-xl hover:bg-yellow-400 transition-all duration-300">
+        //                     Close
+        //                 </button>
+        //             </div>
+        //         `;
+        //         document.body.appendChild(modal);
+        //     } else {
+        //         const modal = document.createElement('div');
+        //         modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+        //         modal.innerHTML = `
+        //             <div class="bg-primary p-8 rounded-2xl shadow-2xl max-w-md mx-4 glass-effect animate-bounce-in">
+        //                 <h3 class="text-2xl font-bold text-red-400 mb-4">Missing Information</h3>
+        //                 <p class="text-white mb-6">Please fill in all search fields</p>
+        //                 <button onclick="this.parentElement.parentElement.remove()" class="bg-[#F5B800] text-primary font-bold px-6 py-3 rounded-xl hover:bg-yellow-400 transition-all duration-300">
+        //                     Close
+        //                 </button>
+        //             </div>
+        //         `;
+        //         document.body.appendChild(modal);
+        //     }
+        // });
 
         // Book Now button functionality
         document.querySelectorAll('button').forEach(button => {
