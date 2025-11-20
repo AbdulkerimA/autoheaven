@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Trucks\Tables;
+namespace App\Filament\Resources\Sedans\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -9,11 +9,13 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Builder;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class TrucksTable
+class SedansTable
 {
     public static function configure(Table $table): Table
     {

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\Trucks\Schemas;
+namespace App\Filament\Resources\MiniBuses\Schemas;
 
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class TrucksForm
+class MiniBusForm
 {
     public static function configure(Schema $schema): Schema
     {

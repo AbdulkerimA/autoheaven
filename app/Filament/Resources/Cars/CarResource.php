@@ -25,6 +25,7 @@ class CarResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Truck;
 
     protected static ?string $recordTitleAttribute = 'manage cars';
+    protected static ?string $navigationLabel = "Manage All Cars";
 
     public static function form(Schema $schema): Schema
     {
@@ -65,4 +66,5 @@ class CarResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
 }

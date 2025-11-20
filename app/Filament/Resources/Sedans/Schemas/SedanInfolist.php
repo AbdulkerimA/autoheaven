@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\Trucks\Schemas;
+namespace App\Filament\Resources\Sedans\Schemas;
 
 use App\Models\Car;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
-class TrucksInfolist
+class SedanInfolist
 {
     public static function configure(Schema $schema): Schema
     {

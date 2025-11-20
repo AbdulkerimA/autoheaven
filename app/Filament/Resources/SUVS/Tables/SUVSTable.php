@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Trucks\Tables;
+namespace App\Filament\Resources\SUVS\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -13,7 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class TrucksTable
+class SUVSTable
 {
     public static function configure(Table $table): Table
     {
