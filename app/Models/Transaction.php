@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Transaction extends Model
+{
+    /** @use HasFactory<\Database\Factories\TransactionFactory> */
+    use HasFactory;
+    
+    protected $fillable = [
+        'booking_id',
+        'amount',
+        'payment_method',
+        'status',
+        'reference',
+    ];
+
+    /** -------------------------
+     *   RELATIONSHIPS
+     *  ------------------------- */
+
+    // TRANSACTION → Booking
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class);
+    }
+}

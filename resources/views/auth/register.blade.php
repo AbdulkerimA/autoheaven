@@ -11,13 +11,14 @@
         @csrf
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" 
+            <x-input-label for="name" :value="__('Full Name')" 
                             class="block text-sm font-medium mb-2 " 
                             style="
                                 color: var(--color-dark-text);
                                 font-family: Inter, system-ui, sans-serif;
                             "    
             />
+
             <x-text-input 
                 id="name" 
                 class="input-field w-full px-4 py-3 rounded-xl focus:outline-none"
@@ -26,6 +27,27 @@
                 font-family: Inter, system-ui, sans-serif;
                 " 
                 type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!--User Name -->
+        <div class="mt-4">
+            <x-input-label for="name" :value="__('User Name')" 
+                            class="block text-sm font-medium mb-2 " 
+                            style="
+                                color: var(--color-dark-text);
+                                font-family: Inter, system-ui, sans-serif;
+                            "    
+            />
+
+            <x-text-input 
+                id="user-name" 
+                class="input-field w-full px-4 py-3 rounded-xl focus:outline-none"
+                style="
+                color: var(--color-dark-text);
+                font-family: Inter, system-ui, sans-serif;
+                " 
+                type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 

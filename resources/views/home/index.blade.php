@@ -159,12 +159,14 @@
             <div class="max-w-7xl mx-auto px-10">
                 <div class="text-center mb-16 scroll-reveal">
                     <h2 class="text-4xl md:text-5xl font-heading font-bold mb-4 text-primary">Featured Cars</h2>
-                    <p class="text-xl text-[#374151] max-w-2xl mx-auto font-body">
+                    <p class="text-xl text-gray-400 max-w-2xl mx-auto font-body">
                         Discover our most popular vehicles for your next adventure
                     </p>
                 </div>
                 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @forelse ($cars as $car)
+                    
                     <!-- Car 1 -->
                     <div class="card-hover bg-[#111827] rounded-xl overflow-hidden shadow-md scroll-reveal group">
                         <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center relative">
@@ -178,18 +180,23 @@
                             </div>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-heading font-bold mb-2 text-primary">bmw </h3>
-                            <p class="text-[#374151] text-sm mb-4 font-body">Electric • Luxury • 5 seats</p>
+                            <h3 class="text-xl font-heading font-bold mb-2 text-primary">{{ $car->brand }}</h3>
+                            <p class="text-gray-400 text-sm mb-4 font-body">{{ $car->fuel_type }} • {{ $car->category }} • {{ $car->seats }} seats</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-[#facc15]">890 ETB<span class="text-sm text-gray-500">/day</span></span>
+                                <span class="text-2xl font-bold text-[#facc15]">{{ $car->price_per_day }} ETB<span class="text-sm text-gray-500">/day</span></span>
                                 <div class="flex text-[#facc15] text-sm">
                                     ★★★★★
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @empty
+                    <div>
+                        the DB is empty
+                    </div>
+                    @endforelse
                     
-                    <!-- Car 2 -->
+                    {{-- <!-- Car 2 -->
                     <div class="card-hover bg-[#111827] rounded-xl overflow-hidden shadow-md scroll-reveal group" style="animation-delay: 0.1s;">
                         <div class="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative">
                             <div class="text-6xl">
@@ -259,7 +266,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
