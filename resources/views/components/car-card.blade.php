@@ -69,15 +69,15 @@
     <!-- Availability Badge -->
     <div class="availability-badge absolute top-3 left-3">
         <span class="px-3 py-1 rounded-full text-xs font-semibold 
-            {{ $car['available'] ? 'bg-green-500 text-white' : 'bg-red-500 text-white' }}">
-            {{ $car['available'] ? 'Available' : 'Booked' }}
+            {{ $car['availability_status'] == 'available' ? 'bg-green-500 text-white' : 'bg-red-500 text-white' }}">
+            {{ $car['availability_status'] == 'available' ? 'Available' : $car->availability_status }}
         </span>
     </div>
 
     <!-- Car Image -->
     <div class="overflow-hidden">
-        <img src="{{ $car['image'] }}" 
-             alt="{{ $car['name'] }}" 
+        <img src="{{ $car->media->first()?->file_path ?? 'https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg' }}" 
+             alt="{{ $car->title }}"
              class="w-full h-48 object-cover">
     </div>
 
@@ -86,7 +86,7 @@
         <!-- Title + Category -->
         <div class="flex justify-between items-start mb-4">
             <div>
-                <h3 class="text-xl font-bold text-white mb-1">{{ $car['name'] }}</h3>
+                <h3 class="text-xl font-bold text-white mb-1">{{ Str::limit($car['name'],11) }}</h3>
                 <p class="text-yellow-400 text-sm font-semibold">{{ strtoupper($car['brand']) }}</p>
             </div>
             <span class="text-xs px-2 py-1 rounded-full bg-gray-700 text-gray-300">
@@ -149,7 +149,7 @@
             </div>
 
             <div class="text-right">
-                <span class="text-yellow-400 text-xl font-bold">${{ $car['price'] }}</span>
+                <span class="text-yellow-400 text-xl font-bold">{{ $car['price_per_day'] }} Birr</span>
                 <span class="text-gray-400 text-sm">/day</span>
             </div>
         </div>
@@ -162,9 +162,9 @@
 
             <button 
                 class="btn-gold flex-1 px-4 py-3 rounded-lg text-sm 
-                {{ !$car['available'] ? 'opacity-50 cursor-not-allowed' : '' }}"
-                {{ !$car['available'] ? 'disabled' : '' }}>
-                {{ $car['available'] ? 'Rent Now' : 'Unavailable' }}
+                {{ $car['availability_status'] != 'available'? 'opacity-50 cursor-not-allowed' : '' }}"
+                {{ $car['availability_status'] != 'available' ? 'disabled' : '' }}>
+                {{ $car['availability_status'] == 'available' ? 'Rent Now' : 'Unavailable' }}
             </button>
         </div>
 
