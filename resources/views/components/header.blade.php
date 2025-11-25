@@ -1,4 +1,4 @@
-<header id="navbar" class="fixed top-0 w-full z-50 navbar-scroll">
+<header id="navbar" {{ $attributes->merge(['class'=>"fixed top-0 w-full z-50 navbar-scroll"]) }}>
     <nav class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
         <div class="flex items-center animate-fade-in">
             <h1 class="text-3xl font-bold gradient-text">Auto Heaven</h1>
