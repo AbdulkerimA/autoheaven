@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Car;
@@ -23,6 +24,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// posts
+Route::middleware('auth')->group(function () {
+    Route::post('/rent',[BookingController::class,'store']);
 });
 
 Route::controller(CarController::class)->group(function (){

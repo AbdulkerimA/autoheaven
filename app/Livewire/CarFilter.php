@@ -20,6 +20,10 @@ class CarFilter extends Component
 
     public $sort = 'name';
 
+    public $showModal = false;
+    public $selectedCar;
+    protected $listeners = ['open-rent-modal' => 'openModal'];
+
     protected $queryString = [
         'search',
         'category',
@@ -66,4 +70,16 @@ class CarFilter extends Component
             default      => ['title', 'asc']
         };
     }
+
+    // modal functions
+    public function openModal($carId)
+    {
+        $this->selectedCar = Car::find($carId);
+        $this->showModal = true;
+    }
+
+    public function closeModal(){
+        $this->showModal = false;
+    }
+
 }

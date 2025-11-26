@@ -161,6 +161,7 @@
             </button> --}}
 
             <button 
+                wire:click="$dispatch('open-rent-modal', { carId: {{ $car->id }} })"
                 class="btn-gold flex-1 px-4 py-3 rounded-lg text-sm 
                 {{ $car['availability_status'] != 'available'? 'opacity-50 cursor-not-allowed' : '' }}"
                 {{ $car['availability_status'] != 'available' ? 'disabled' : '' }}>
