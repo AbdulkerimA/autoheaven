@@ -23,10 +23,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/profile/create',[ProfileController::class,'create'])->name('profile.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile', [PersonalInformationController::class, 'update'])->name('personalinfo.edit');
     Route::post('/profile/pic/update',[ProfilePicController::class,'update']);
+    Route::post('/profile/create',[ProfileController::class,'store'])->name('profile.store');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

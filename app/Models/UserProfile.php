@@ -27,7 +27,7 @@ class UserProfile extends Model
         'emergency_name',
         'emergency_phone',
 
-        'profile_photo',
+        'profile_picture',
     ];
 
     public function user()

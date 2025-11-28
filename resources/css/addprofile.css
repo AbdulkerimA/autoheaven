@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    box-sizing: border-box;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+.theme-toggle {
+    position: relative;
+    width: 56px;
+    height: 28px;
+    background: #374151;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle.active {
+    background: #facc15;
+}
+
+.theme-toggle-slider {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle.active .theme-toggle-slider {
+    transform: translateX(28px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    color: #111827;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(250, 204, 21, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    color: #facc15;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(250, 204, 21, 0.1);
+    border-color: #facc15;
+    transform: translateY(-1px);
+}
+
+.profile-card {
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(250, 204, 21, 0.2);
+    box-shadow: 0 0 40px rgba(250, 204, 21, 0.1);
+}
+
+.light .profile-card {
+    background: rgba(249, 250, 251, 0.95);
+    border: 1px solid rgba(17, 24, 39, 0.1);
+    box-shadow: 0 0 40px rgba(17, 24, 39, 0.05);
+}
+
+.input-field {
+    background: rgba(249, 250, 251, 0.1);
+    border: 1px solid rgba(250, 204, 21, 0.2);
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #facc15;
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1);
+    background: rgba(249, 250, 251, 0.15);
+}
+
+.light .input-field {
+    background: rgba(17, 24, 39, 0.05);
+    border-color: rgba(17, 24, 39, 0.2);
+}
+
+.light .input-field:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    background: rgba(17, 24, 39, 0.08);
+}
+
+.golden-glow {
+    position: relative;
+}
+
+.golden-glow::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(250, 204, 21, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.light .golden-glow::before {
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    opacity: 0.8;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #facc15 0%, #f59e0b 100%);
+    height: 4px;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+
+.upload-zone {
+    border: 2px dashed rgba(250, 204, 21, 0.3);
+    transition: all 0.3s ease;
+}
+
+.upload-zone:hover {
+    border-color: #facc15;
+    background: rgba(250, 204, 21, 0.05);
+}
+
+.upload-zone.dragover {
+    border-color: #facc15;
+    background: rgba(250, 204, 21, 0.1);
+    transform: scale(1.02);
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #facc15;
+    object-fit: cover;
+}
+
+.file-preview {
+    background: rgba(250, 204, 21, 0.1);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 8px;
+}

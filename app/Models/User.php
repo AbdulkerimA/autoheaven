@@ -26,6 +26,7 @@ class User extends Authenticatable
         'address',
         'password',
         'profile_picture',
+        'has_profile'
     ];
 
     /**
@@ -50,12 +51,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
+    // OWNERS → Cars they own
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+    
     // OWNERS → Cars they own
     public function cars()
     {
         return $this->hasMany(Car::class, 'owner_id');
     }
+
 
     // CUSTOMERS → Bookings they made
     public function bookings()
