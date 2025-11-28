@@ -13,15 +13,17 @@ class Car extends Model
 
     protected $fillable = [
         'owner_id',
-        'title',
+        'name',
         'brand',
         'category',
+        'seats',
         'fuel_type',
         'transmission',
         'price_per_day',
+        'license_plate',
         'year',
         'description',
-        'status', // available, booked, maintenance
+        'availability_status', // available, booked, maintenance
     ];
 
     /** -------------------------

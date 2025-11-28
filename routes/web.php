@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\DashBoard\CarController as DashBoardCarController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\user\PersonalInformationController;
 use App\Http\Controllers\user\ProfilePicController;
@@ -22,6 +23,7 @@ Route::get('/dashboard', function () {
     return view('home.index',['cars'=>$cars]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile/create',[ProfileController::class,'create'])->name('profile.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,9 +34,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// posts
+// car
 Route::middleware('auth')->group(function () {
     Route::post('/rent',[BookingController::class,'store']);
+});
+// car for owners
+Route::middleware(['auth'])->group(function () {
+    Route::get('/owner',[DashBoardCarController::class,'index'])
+    ->middleware('can:viewAny,App\Models\Car')->name('owner.index');
+
+    Route::get('/car/add',[DashBoardCarController::class,'create'])
+    ->middleware('can:create,App\Models\Car');
+
+    Route::post('/car/add',[DashBoardCarController::class,'store'])
+    ->middleware('can:create,App\Models\Car');
 });
 
 Route::controller(CarController::class)->group(function (){

@@ -66,8 +66,8 @@ class CarFilter extends Component
             'price-low'  => ['price_per_day', 'asc'],
             'price-high' => ['price_per_day', 'desc'],
             'rating'     => ['year', 'desc'], // adjust if you add rating column
-            'year'       => ['year', 'desc'],
-            default      => ['title', 'asc']
+            'year'       => ['created_at', 'desc'],
+            default      => ['created_at', 'desc']
         };
     }
 

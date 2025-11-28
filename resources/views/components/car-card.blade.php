@@ -76,7 +76,8 @@
 
     <!-- Car Image -->
     <div class="overflow-hidden">
-        <img src="{{ $car->media->first()?->file_path ?? 'https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg' }}" 
+        {{-- @dump($car->media->first()?->file_path) --}}
+        <img src="{{ asset('storage/'.$car->media->first()?->file_path) ?? 'https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg' }}" 
              alt="{{ $car->title }}"
              class="w-full h-48 object-cover">
     </div>
