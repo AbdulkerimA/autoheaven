@@ -19,7 +19,9 @@
             <div class="relative hidden md:block">
                 <button class="flex items-center space-x-3 text-gray-300 hover:text-[#F5B800]" id="profileBtn">
                     <div class="w-10 h-10 bg-gradient-to-br bg-[#F5B800] to-yellow-600 rounded-full flex items-center justify-center text-[#12181f] font-bold">
-                        <img src="" alt="">
+                        <img src="{{ asset('storage/'.Auth::user()->profile_picture) }}" alt="{{ Auth::user()->name[0] }}"
+                            class="w-full h-full rounded-full object-cover"
+                        >
                     </div>
                     <div class="hidden md:block text-left">
                         <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>

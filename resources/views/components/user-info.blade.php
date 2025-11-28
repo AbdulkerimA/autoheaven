@@ -9,7 +9,7 @@
                 alt="Profile Photo" class="profile-photo"> 
                 <button id="photoUploadBtn"
                 class="absolute bottom-0 right-0 bg-accent hover:bg-warm-amber text-primary p-2 rounded-full transition-all duration-300 transform hover:scale-110">
-                <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20">
+                <svg class="w-5 h-5 text-yellow-500 text-xl" fill="#eab308" viewbox="0 0 20 20">
                     <path fill-rule="evenodd"
                         d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
                         clip-rule="evenodd" />
