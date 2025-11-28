@@ -3,6 +3,8 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\user\PersonalInformationController;
+use App\Http\Controllers\user\ProfilePicController;
 use App\Models\Car;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,8 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile', [PersonalInformationController::class, 'update'])->name('personalinfo.edit');
+    Route::post('/profile/pic/update',[ProfilePicController::class,'update']);
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
