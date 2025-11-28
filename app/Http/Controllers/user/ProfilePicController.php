@@ -23,12 +23,12 @@ class ProfilePicController extends Controller
         // return response()->json(['path',$path]);
 
         // Delete old image if needed
-        if ($user->profile_pic && Storage::disk('public')->exists($user->profile_pic)) {
-            Storage::disk('public')->delete($user->profile_pic);
+        if ($user->profile->profile_pic && Storage::disk('public')->exists($user->profile->profile_pic)) {
+            Storage::disk('public')->delete($user->profile->profile_pic);
         }
 
         // Update user
-        $user->update([
+        $user->profile->update([
             'profile_picture' => $path,
         ]);
 

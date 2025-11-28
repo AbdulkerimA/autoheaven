@@ -28,7 +28,18 @@ class PersonalInformationController extends Controller
                 'email',
                 Rule::unique('users', 'email')->ignore($user->id),
             ],
-            'address'  => 'required|min:4',
+            'street'           => ['required', 'string', 'max:255'],
+            'city'             => ['required', 'string', 'max:255'],
+            'region'           => ['required', 'string', 'max:255'],
+            'dob'              => ['required', 'date'],
+            'license_number'   => [
+                'required', 
+                'string', 
+                'max:255',
+                Rule::unique('user_profiles', 'license_number')->ignore($user->profile->id),
+            ],
+            'emergency_name'   => ['required', 'string', 'max:255'],
+            'emergency_phone'  => ['required', 'string', 'max:20'],
         ]);
 
 
@@ -38,8 +49,17 @@ class PersonalInformationController extends Controller
             'name'      => $validated['fullName'],
             'username'  => $validated['userName'],
             'email'     => $validated['email'],
-            'phone'     => $validated['tel'],
-            'address'   => $validated['address'],
+        ]);
+
+        $user->profile->update([
+            'phone'           => $validated['tel'],
+            'street'          => $validated['street'],
+            'city'            => $validated['city'],
+            'region'          => $validated['region'],
+            'dob'             => $validated['dob'],
+            'license_number'  => $validated['license_number'],
+            'emergency_name'  => $validated['emergency_name'],
+            'emergency_phone' => $validated['emergency_phone'],
         ]);
 
         if ($updated) {
