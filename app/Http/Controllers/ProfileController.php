@@ -94,7 +94,7 @@ class ProfileController extends Controller
             'license_number'    => $validated['licenseNumber'],
             'emergency_name'    => $validated['emergencyName'],
             'emergency_phone'   => $validated['emergencyPhone'],
-            'profile_picture'   => $validated['profile_photo_path'],
+            'profile_picture'   => $validated['profile_photo_path']??'',
             'license_photo'     => $validated['license_photo_path'],
         ]);
 
@@ -102,7 +102,7 @@ class ProfileController extends Controller
 
         if($validated['role'] == 'customer')
             return redirect('/cars')->with('success', 'Profile created successfully!');
-        return redirect('/owners')->with('success', 'Profile created successfully!');
+        return redirect('/owner')->with('success', 'Profile created successfully!');
     }
 
     /**
