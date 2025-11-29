@@ -72,6 +72,18 @@
                         Basic Information
                     </h2>
 
+                    {{-- availability_status --}}
+                    <div class="form-group col-span-2">
+                        <label class="form-label" for="availability_status">availability status</label>
+                        <select id="availability_status" name="availability_status" class="form-select" required>
+                            <option value="{{ $car->availability_status }}">{{ $car->availability_status }}</option>
+                            <option value="available">available</option>
+                            <option value="booked">booked</option>
+                            <option value="maintenance"> on maintenance</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('brand')" class="mt-2" />
+                    </div>
+
                     <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-6 slide-up" style="animation-delay:0.1s;">
                         <div class="form-group">
                             <label class="form-label" for="carName">Car Name / Model</label>

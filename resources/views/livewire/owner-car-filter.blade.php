@@ -24,10 +24,17 @@
             <select class="filter-select" id="brandFilter" wire:model="brand" wire:change="$refresh">
                 <option value="">All Brands</option>
                 <option value="BMW">BMW</option>
-                <option value="Mercedes">Mercedes</option>
+                <option value="Mercedes-Benz">Mercedes-Benz</option>
                 <option value="Audi">Audi</option>
                 <option value="Toyota">Toyota</option>
+                <option value="Honda">Honda</option>
                 <option value="Porsche">Porsche</option>
+                <option value="Volkswagen">Volkswagen</option>
+                <option value="Ford">Ford</option>
+                <option value="Chevrolet">Chevrolet</option>
+                <option value="Nissan">Nissan</option>
+                <option value="Hyundai">Hyundai</option>
+                <option value="Kia">Kia</option>
             </select> 
             
             <select class="filter-select" id="priceFilter" wire:model="status" wire:change="$refresh" >

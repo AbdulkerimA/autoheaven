@@ -97,13 +97,14 @@ class CarController extends Controller
 
         // Validate form inputs
         $validated = $request->validate([
-            'carName'       => 'required|string|max:255',
-            'brand'         => 'required|string|max:100',
-            'category'      => 'required|string|max:100',
-            'pricePerDay'   => 'required|numeric|min:1',
-            'fuelType'      => 'required|string|max:50',
-            'transmission'  => 'required|string|max:50',
-            'seats'         => 'required|integer|min:1',
+            'carName'              => 'required|string|max:255',
+            'availability_status'  => 'required|in:booked,available,maintenance',
+            'brand'                => 'required|string|max:100',
+            'category'             => 'required|string|max:100',
+            'pricePerDay'          => 'required|numeric|min:1',
+            'fuelType'             => 'required|string|max:50',
+            'transmission'         => 'required|string|max:50',
+            'seats'                => 'required|integer|min:1',
             'year'          => 'required|integer|min:1900|max:' . date('Y'),
             'mileage'       => 'required|numeric|min:0',
             'licensePlate'  => 'required|string|max:50',
@@ -113,8 +114,9 @@ class CarController extends Controller
 
         // Update car data
         $car->update([
-            'name'              => $validated['carName'],
-            'brand'             => $validated['brand'],
+            'name'                      => $validated['carName'],
+            'brand'                     => $validated['brand'],
+            'availability_status'       => $validated['availability_status'],
             'category'          => $validated['category'],
             'price_per_day'     => $validated['pricePerDay'],
             'fuel_type'         => $validated['fuelType'],
