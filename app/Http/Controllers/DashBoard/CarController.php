@@ -5,11 +5,17 @@ namespace App\Http\Controllers\DashBoard;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\CarMedia;
+use Illuminate\Contracts\Auth\Access\Authorizable;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Filament\authorize;
+
 class CarController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index(){
         $cars = Car::with('media')->where('owner_id',Auth::id())->paginate(9);
         return view('owner.cars.index',['cars'=>$cars]);
@@ -70,5 +76,32 @@ class CarController extends Controller
 
         // Redirect back with success message
         return redirect('/owner')->with('success', 'Car listed successfully!');
+    }
+
+    /**
+     * display the page to edit a car
+     */
+    public function edit(Request $request, Car $car){
+        dump($car);
+        return view('owner.cars.edit',['car'=>$car]);
+    }
+    /**
+     * handle the updat a car request
+     */
+    public function update(Request $request){
+        dd($request->all());
+    }
+
+    /**
+     * delete a car
+     */
+    public function destroy(Request $request, Car $car){
+        
+        // dd($request->all(),$car);
+        
+        $this->authorize('delete',$car);
+
+        $car->delete();
+        return redirect()->back()->with('success','car deleted successfuly');
     }
 }

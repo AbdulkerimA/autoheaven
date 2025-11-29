@@ -46,8 +46,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/car/add',[DashBoardCarController::class,'create'])
     ->middleware('can:create,App\Models\Car');
 
+    Route::get('/car/edit/{car}',[DashBoardCarController::class,'edit'])
+    ->middleware('can:create,App\Models\Car');
+
     Route::post('/car/add',[DashBoardCarController::class,'store'])
     ->middleware('can:create,App\Models\Car');
+
+    Route::delete('/car/delete/{car}',[DashBoardCarController::class,'destroy']);
 });
 
 Route::controller(CarController::class)->group(function (){

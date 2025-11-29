@@ -158,7 +158,7 @@
         <!-- Buttons -->
         <div class="flex space-x-3 text-lg">
             @can('viewAny',$car)
-                <button onclick="window.location='/car/edit'"
+                <button onclick="window.location='/car/edit/'+{{ $car->id }}"
                         class="btn-outline-gold flex-1 px-4 py-3 rounded-lg text-sm">
                     edit
                 </button>
@@ -174,12 +174,17 @@
             </button>
 
             @can('viewAny',$car)
-                <button class="flex-1 px-4 py-3 rounded-lg text-sm border-2 border-red-600 text-red-600 font-semibold hover:bg-red-600/20">
+                <button type="submit" form="deleteForm"
+                        class="flex-1 px-4 py-3 rounded-lg text-sm border-2 border-red-600 text-red-600 font-semibold hover:bg-red-600/20">
                     delete
                 </button>
             @endcan
         </div>
-
+        {{-- car delete form --}}
+        <form action="/car/delete/{{ $car->id }}" method="post" id="deleteForm">
+            @csrf
+            @method('DELETE')
+        </form>
     </div>
 
 </div>

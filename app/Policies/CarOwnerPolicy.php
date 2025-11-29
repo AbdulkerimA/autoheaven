@@ -49,10 +49,7 @@ class CarOwnerPolicy
      */
     public function delete(User $user,Car $car): bool
     {
-        if(Auth::user()->profile->role == 'owner')
-            if($car->owner_id == Auth::id())
-                return true;
-        return false;
+        return $user->id == $car->owner_id;
     }
 
     /**
