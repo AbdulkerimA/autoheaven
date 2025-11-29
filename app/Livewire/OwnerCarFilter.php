@@ -3,10 +3,11 @@
 namespace App\Livewire;
 
 use App\Models\Car;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CarFilter extends Component
+class OwnerCarFilter extends Component
 {
     use WithPagination;
 
@@ -16,7 +17,6 @@ class CarFilter extends Component
     public $brand = '';
     public $fuel = '';
     public $status = '';
-    public $maxPrice = 500000;
 
     public $sort = 'name';
 
@@ -43,6 +43,7 @@ class CarFilter extends Component
     public function render()
     {
         $cars = Car::with('media')
+            ->where('owner_id',Auth::id())
             ->when($this->search, function($q) {
                 $q->where(function($query) {
                     $query->where('name', 'like', "%{$this->search}%")
@@ -53,11 +54,10 @@ class CarFilter extends Component
             ->when($this->brand, fn($q) => $q->where('brand', $this->brand))
             ->when($this->fuel, fn($q) => $q->where('fuel_type', $this->fuel))
             ->when($this->status, fn($q) => $q->where('availability_status', $this->status))
-            ->when($this->maxPrice, fn($q) => $q->where('price_per_day', '<=', $this->maxPrice))
             ->orderBy(...$this->sortField())
             ->paginate(9);
 
-        return view('livewire.car-filter', ['cars' => $cars]);
+        return view('livewire.owner-car-filter',['cars' => $cars]);
     }
 
     private function sortField()
@@ -70,16 +70,4 @@ class CarFilter extends Component
             default      => ['created_at', 'desc']
         };
     }
-
-    // modal functions
-    public function openModal($carId)
-    {
-        $this->selectedCar = Car::find($carId);
-        $this->showModal = true;
-    }
-
-    public function closeModal(){
-        $this->showModal = false;
-    }
-
 }

@@ -10,7 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CarController extends Controller
 {
-    
+    public function index(){
+        $cars = Car::with('media')->where('owner_id',Auth::id())->paginate(9);
+        return view('owner.cars.index',['cars'=>$cars]);
+    }
+
     public function create(){
         // $cars = Car::where('owner_id',Auth::id())->paginate(10);
         return view('owner.cars.create');

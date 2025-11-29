@@ -156,18 +156,28 @@
         </div>
 
         <!-- Buttons -->
-        <div class="flex space-x-3">
-            {{-- <button class="btn-outline-gold flex-1 px-4 py-3 rounded-lg text-sm">
-                View Details
-            </button> --}}
+        <div class="flex space-x-3 text-lg">
+            @can('viewAny',$car)
+                <button onclick="window.location='/car/edit'"
+                        class="btn-outline-gold flex-1 px-4 py-3 rounded-lg text-sm">
+                    edit
+                </button>
+            @endcan
+            
 
             <button 
                 wire:click="$dispatch('open-rent-modal', { carId: {{ $car->id }} })"
                 class="btn-gold flex-1 px-4 py-3 rounded-lg text-sm 
                 {{ $car['availability_status'] != 'available'? 'opacity-50 cursor-not-allowed' : '' }}"
                 {{ $car['availability_status'] != 'available' ? 'disabled' : '' }}>
-                {{ $car['availability_status'] == 'available' ? 'Rent Now' : 'Unavailable' }}
+                {{ $car['availability_status'] == 'available' ? 'bookings' : 'Unavailable' }}
             </button>
+
+            @can('viewAny',$car)
+                <button class="flex-1 px-4 py-3 rounded-lg text-sm border-2 border-red-600 text-red-600 font-semibold hover:bg-red-600/20">
+                    delete
+                </button>
+            @endcan
         </div>
 
     </div>
