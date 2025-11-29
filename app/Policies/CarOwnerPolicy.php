@@ -66,8 +66,9 @@ class CarOwnerPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user): bool
+    public function forceDelete(User $user,Car $car): bool
     {
-        return false;
+        return $user->profile->role == 'owner' 
+               && $car->owner_id == $user->id;
     }
 }
