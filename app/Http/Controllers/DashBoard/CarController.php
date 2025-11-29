@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 use function Filament\authorize;
 
@@ -82,14 +83,70 @@ class CarController extends Controller
      * display the page to edit a car
      */
     public function edit(Request $request, Car $car){
-        dump($car);
+        // dump($car);
+        
         return view('owner.cars.edit',['car'=>$car]);
     }
     /**
      * handle the updat a car request
      */
-    public function update(Request $request){
-        dd($request->all());
+    public function update(Request $request,Car $car){
+        // dd($request->all());
+
+        $this->authorize('update', $car);
+
+        // Validate form inputs
+        $validated = $request->validate([
+            'carName'       => 'required|string|max:255',
+            'brand'         => 'required|string|max:100',
+            'category'      => 'required|string|max:100',
+            'pricePerDay'   => 'required|numeric|min:1',
+            'fuelType'      => 'required|string|max:50',
+            'transmission'  => 'required|string|max:50',
+            'seats'         => 'required|integer|min:1',
+            'year'          => 'required|integer|min:1900|max:' . date('Y'),
+            'mileage'       => 'required|numeric|min:0',
+            'licensePlate'  => 'required|string|max:50',
+            'description'   => 'required|string',
+            'images'        => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // optional
+        ]);
+
+        // Update car data
+        $car->update([
+            'name'              => $validated['carName'],
+            'brand'             => $validated['brand'],
+            'category'          => $validated['category'],
+            'price_per_day'     => $validated['pricePerDay'],
+            'fuel_type'         => $validated['fuelType'],
+            'transmission'      => $validated['transmission'],
+            'seat'              => $validated['seats'],
+            'year'              => $validated['year'],
+            'mileage'           => $validated['mileage'],
+            'license_plate'     => $validated['licensePlate'],
+            'description'       => $validated['description'],
+        ]);
+
+        // Handle optional image upload
+        if ($request->hasFile('images')) {
+            $image = $request->file('images');
+
+            // Delete old images if needed (optional)
+            foreach ($car->media as $media) {
+                if (Storage::exists($media->file_path)) {
+                    Storage::delete($media->file_path);
+                }
+                $media->delete();
+            }
+
+            // Store new image
+            $path = $image->store('cars', 'public');
+            CarMedia::create([
+                'car_id'    => $car->id,
+                'file_path' => $path,
+            ]);
+        }
+
+        return redirect('/owner')->with('success', 'Car updated successfully!');
     }
 
     /**

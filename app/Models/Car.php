@@ -22,6 +22,7 @@ class Car extends Model
         'price_per_day',
         'license_plate',
         'year',
+        'mileage',
         'description',
         'availability_status', // available, booked, maintenance
     ];

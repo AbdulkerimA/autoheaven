@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/car/add',[DashBoardCarController::class,'store'])
     ->middleware('can:create,App\Models\Car');
 
+    Route::put('/car/edit/{car}',[DashBoardCarController::class,'update']);
     Route::delete('/car/delete/{car}',[DashBoardCarController::class,'destroy']);
 });
 
