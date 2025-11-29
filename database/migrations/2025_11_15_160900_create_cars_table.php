@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
             $table->string('name');
             $table->string('brand');
-            $table->enum('category', ['SUV','Sedan','Hatchback','Convertible','Truck','Van','Sports','Luxury','Other']);
+            $table->enum('category', ["SUV", "Sedan", "Hatchback", "Convertible", "Pickup Truck", "Van", "Sports Car", "Luxury"]);
             $table->decimal('price_per_day', 10, 2);
-            $table->enum('fuel_type', ['Petrol','Diesel','Electric','Hybrid']);
-            $table->enum('transmission', ['Automatic','Manual']);
+            $table->enum('fuel_type', ["Select Fuel Type", "Petrol", "Diesel", "Electric", "Hybrid", "Plug-in Hybrid"]);
+            $table->enum('transmission', ['Automatic','Manual','CVT']);
             $table->integer('seats');
             $table->integer('year');
             $table->integer('mileage')->nullable();
