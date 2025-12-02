@@ -13,29 +13,31 @@
 
                 {{-- cta --}}
                 <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up mt-4 mb-8" style="animation-delay: 0.2s;">
-                    <button class="btn-primary font-bold px-10 py-4 rounded-xl text-lg shadow-md">
+                    <button class="btn-primary font-bold px-10 py-4 rounded-xl text-lg shadow-md"
+                            onclick="window.location = '/cars'">
                         Rent a Car
                     </button>
-                    <button class="btn-outline bg-white/10 backdrop-blur-sm font-bold px-10 py-4 rounded-xl text-lg border-white/30 text-white hover:bg-[#F59E0B] hover:text-primary">
+                    <button class="btn-outline bg-white/10 backdrop-blur-sm font-bold px-10 py-4 rounded-xl text-lg border-white/30 text-white hover:bg-[#F59E0B] hover:text-primary"
+                            onclick="window.location = '/owners'">
                         List Your Car
                     </button>
                 </div>
 
                 <!-- Animated Search Bar -->
                 <div class="glass-effect p-8 rounded-2xl shadow-2xl max-w-4xl mx-auto animate-bounce-in">
-                    <form class="grid md:grid-cols-4 gap-4">
-                        <div class="group">
-                            <label for="location" class="block text-sm font-medium text-gray-300 mb-2">pick up Location</label>
-                            <input type="text" id="location" placeholder="from Where ?" class="w-full p-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#F5B800] focus:border-transparent transition-all duration-300 group-hover:bg-white/20">
+                    <form class="grid md:grid-cols-4 gap-4" method="GET" action="/cars">
+                        <div class="group col-span-3 flex flex-col items-start">
+                            <label for="location" class="block text-sm font-medium text-gray-300 mb-2">Car Brand</label>
+                            <input type="text" name="search" id="location" placeholder="Search Your Favorite Brand Here" class="w-full p-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#F5B800] focus:border-transparent transition-all duration-300 group-hover:bg-white/20">
                         </div>
-                        <div class="group">
+                        {{-- <div class="group">
                             <label for="pickup-date" class="block text-sm font-medium text-gray-300 mb-2">Pickup Date</label>
                             <input type="date" id="pickup-date" class="w-full p-4 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-[#F5B800] focus:border-transparent transition-all duration-300 group-hover:bg-white/20">
                         </div>
                         <div class="group">
                             <label for="return-date" class="block text-sm font-medium text-gray-300 mb-2">Return Date</label>
                             <input type="date" id="return-date" class="w-full p-4 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-[#F5B800] focus:border-transparent transition-all duration-300 group-hover:bg-white/20">
-                        </div>
+                        </div> --}}
                         <div class="flex items-end">
                             <button type="submit" class="w-full bg-[#F5B800] text-[#1C252E] font-bold p-4 rounded-xl hover:scale-105 hover:bg-yellow-400 transition-all duration-300 animate-glow">
                                 Search Cars
@@ -107,45 +109,56 @@
                 </div>
                 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card-interactive group relative h-80 rounded-3xl overflow-hidden shadow-xl scroll-reveal">
+                    <div class="card-interactive group relative h-80 rounded-3xl overflow-hidden shadow-xl scroll-reveal cursor-pointer"
+                        onclick="window.location = '/cars?category=Luxury'">
                         <div class="absolute inset-0 bg-gradient-to-br from-[#F59E0B]/80 to-[#F59E0B]-warm/60"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <img src="{{ asset('storage/cars/suv2.jpg') }}" alt="suv" class="h-full w-full object-cover">
                         </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent"
+                             >
                             <h3 class="text-2xl font-bold text-white mb-2">Luxury</h3>
                             <p class="text-white/80">Premium vehicles for special occasions</p>
                         </div>
                     </div>
                     
-                    <div class="card-interactive group relative h-80 rounded-3xl overflow-hidden shadow-xl scroll-reveal" style="animation-delay: 0.1s;">
+                    <div class="card-interactive group relative h-80 rounded-3xl overflow-hidden shadow-xl scroll-reveal cursor-pointer" 
+                        onclick="window.location = '/cars?category=SUV'"    
+                        style="animation-delay: 0.1s;">
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-500/80 to-blue-600/60"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <img src="{{ asset('storage/cars/volkswagen.jpg') }}" alt="suv" class="h-full w-full object-cover">
                         </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent"
+                             >
                             <h3 class="text-2xl font-bold text-white mb-2">Family</h3>
                             <p class="text-white/80">Spacious and safe for family trips</p>
                         </div>
                     </div>
                     
-                    <div class="card-interactive group relative h-80 rounded-3xl overflow-hidden shadow-xl scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="card-interactive group relative h-80 rounded-3xl overflow-hidden shadow-xl scroll-reveal cursor-pointer" 
+                          onclick="window.location = '/cars?category=Sports'"
+                         style="animation-delay: 0.2s;">
                         <div class="absolute inset-0 bg-gradient-to-br from-green-500/80 to-green-600/60"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <img src="{{ asset('storage/cars/bmw-m4-gtr.jpg') }}" alt="fun car">
                         </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent"
+                             >
                             <h3 class="text-2xl font-bold text-white mb-2">Adventure</h3>
                             <p class="text-white/80">Rugged vehicles for outdoor exploration</p>
                         </div>
                     </div>
                     
-                    <div class="card-interactive group relative h-80 rounded-3xl overflow-hidden shadow-xl scroll-reveal" style="animation-delay: 0.3s;">
+                    <div class="card-interactive group relative h-80 rounded-3xl overflow-hidden shadow-xl scroll-reveal cursor-pointer" 
+                         style="animation-delay: 0.3s;"
+                          onclick="window.location = '/cars?category=Sedan'">
                         <div class="absolute inset-0 bg-gradient-to-br from-purple-500/80 to-purple-600/60"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <img src="{{ asset('storage/cars/bmw.jpg') }}" alt="suv" class="h-full w-full object-cover">
                         </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent"
+                            >
                             <h3 class="text-2xl font-bold text-white mb-2">Daily Drive</h3>
                             <p class="text-white/80">Reliable cars for everyday needs</p>
                         </div>
@@ -155,7 +168,7 @@
         </section>
 
         <!-- Featured Cars Section -->
-        <section id="cars" class="py-16 bg-cream">
+        {{-- <section id="cars" class="py-16 bg-cream">
             <div class="max-w-7xl mx-auto px-10">
                 <div class="text-center mb-16 scroll-reveal">
                     <h2 class="text-4xl md:text-5xl font-heading font-bold mb-4 text-primary">Featured Cars</h2>
@@ -195,81 +208,9 @@
                         the DB is empty
                     </div>
                     @endforelse
-                    
-                    {{-- <!-- Car 2 -->
-                    <div class="card-hover bg-[#111827] rounded-xl overflow-hidden shadow-md scroll-reveal group" style="animation-delay: 0.1s;">
-                        <div class="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative">
-                            <div class="text-6xl">
-                                <img src="{{ asset('storage/cars/suv1.jpg') }}" alt="a car" class="w-full h-full object-cover">
-                            </div>
-                            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <button class="btn-primary font-bold px-4 py-2 rounded-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                    Book Now
-                                </button>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-heading font-bold mb-2 text-primary">mercedes benz</h3>
-                            <p class="text-[#374151] text-sm mb-4 font-body">SUV • Premium • 7 seats</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-[#facc15]">1,250 ETb<span class="text-sm text-gray-500">/day</span></span>
-                                <div class="flex text-[#facc15] text-sm">
-                                    ★★★★★
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Car 3 -->
-                    <div class="card-hover bg-[#111827] rounded-xl overflow-hidden shadow-md scroll-reveal group" style="animation-delay: 0.2s;">
-                        <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center relative">
-                            <div class="text-6xl">
-                                <img src="{{ asset('storage/cars/suv2.jpg') }}" alt="suv car">
-                            </div>
-                            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <button class="btn-primary font-bold px-4 py-2 rounded-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                    Book Now
-                                </button>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-heading font-bold mb-2 text-primary">Range rover</h3>
-                            <p class="text-[#374151] text-sm mb-4 font-body">Compact • Economy • 5 seats</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-[#facc15]">4,500 ETB<span class="text-sm text-gray-500">/day</span></span>
-                                <div class="flex text-[#facc15] text-sm">
-                                    ★★★★☆
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Car 4 -->
-                    <div class="card-hover bg-[#111827] rounded-xl overflow-hidden shadow-md scroll-reveal group" style="animation-delay: 0.3s;">
-                        <div class="h-48 bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center relative">
-                            <div class="text-6xl">
-                                <img src="{{ asset('storage/cars/porch-911-gt3.jpg') }}" alt="suv car">
-                            </div>
-                            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <button class="btn-primary font-bold px-4 py-2 rounded-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                    Book Now
-                                </button>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-heading font-bold mb-2 text-primary">Porsche 911 gtr3</h3>
-                            <p class="text-[#374151] text-sm mb-4 font-body">Sports • Luxury • 2 seats</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-[#facc15]">20,999 ETB<span class="text-sm text-gray-500">/day</span></span>
-                                <div class="flex text-[#facc15] text-sm">
-                                    ★★★★★
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <!-- Why Choose Auto Heaven Section -->
         <section class="py-20 bg-gradient-to-b from-[#1C252E] to-gray-900">
