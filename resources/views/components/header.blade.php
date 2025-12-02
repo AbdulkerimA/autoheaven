@@ -1,17 +1,18 @@
+@vite(['resources/js/navProfile.js'])
 <header id="navbar" {{ $attributes->merge(['class'=>"fixed top-0 w-full z-50 navbar-scroll"]) }}>
     <nav class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
         <div class="flex items-center animate-fade-in">
             <h1 class="text-3xl font-bold gradient-text">Auto Heaven</h1>
         </div>
         <div class="hidden md:flex items-center space-x-8 animate-fade-in">
-            <a href="#home" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Home</a>
+            <a href="/#home" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Home</a>
             <a href="/cars" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Cars</a>
             @auth
             <a href="/bookings" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Bookings</a>
             @endauth
-            <a href="#how-it-works" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">How It Works</a>
+            <a href="/#how-it-works" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">How It Works</a>
             <a href="/about" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">About</a>
-            <a href="#contact" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Contact</a>
+            <a href="/#contact" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Contact</a>
             @guest
                 <a href="/login" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Login</a>
                 <a href="/register" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Sign Up</a>
