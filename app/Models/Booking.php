@@ -42,4 +42,11 @@ class Booking extends Model
     {
         return $this->hasOne(Transaction::class);
     }
+
+    
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
 }

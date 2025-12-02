@@ -20,7 +20,10 @@ class BookingController extends Controller
         //                 ->orderBy('created_at', 'desc')
         //                 ->first();
 
-        return view('bookings.index');
+        if(Auth::user()->profile->role == 'owner')
+            return view('bookings.owner');
+        else
+            return view('bookings.index'); 
     }
 
     /**
