@@ -1,20 +1,18 @@
 <div 
     x-data="{ show: false }"
     x-show="show"
-    x-init="
-        Livewire.on('notify', () => {
-            show = true;
-            setTimeout(() => show = false, 3000);
-        });
-    "
     x-transition
+    x-on:notify.window="
+        show = true;
+        setTimeout(() => show = false, 3000);
+    "
     class="fixed top-5 right-5 z-50"
 >
-    <div class="px-5 py-3 rounded-lg shadow-lg text-white"
+    <div class="px-5 py-3 rounded-lg shadow-lg text-white mt-12"
          :class="{
-            'bg-green-600': @js($type) === 'success',
-            'bg-red-600': @js($type) === 'error',
-            'bg-yellow-600': @js($type) === 'warning'
+            'bg-green-600/80': '{{ $type }}' === 'success',
+            'bg-red-600/20': '{{ $type }}' === 'error',
+            'bg-yellow-600/20': '{{ $type }}' === 'warning'
          }">
 
         {{ $message }}
