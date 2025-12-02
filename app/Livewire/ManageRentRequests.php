@@ -91,7 +91,9 @@ class ManageRentRequests extends Component
         $booking = Booking::find($id);
         if ($booking) {
             $booking->status = 'completed';
+            $booking->car->availability_status = 'available';
             $booking->save();
+            $booking->car->save();
 
             // Remove from local collections
             $this->bookings = $this->bookings->reject(fn ($b) => $b->id == $id);
@@ -128,7 +130,9 @@ class ManageRentRequests extends Component
         $booking = Booking::find($id);
         if ($booking) {
             $booking->status = 'cancelled';
+            $booking->car->availability_status = 'available';
             $booking->save();
+            $booking->car->save();
 
             $this->updateLocalBooking($id, 'cancelled');
         }
