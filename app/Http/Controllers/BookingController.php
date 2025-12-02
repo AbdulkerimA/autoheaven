@@ -15,10 +15,10 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::where('customer_id',Auth::id())
-                        ->whereNotIn('status', ['completed', 'cancelled'])
-                        ->orderBy('created_at', 'desc')
-                        ->first();
+        // $bookings = Booking::where('customer_id',Auth::id())
+        //                 ->whereNotIn('status', ['completed', 'cancelled'])
+        //                 ->orderBy('created_at', 'desc')
+        //                 ->first();
 
         return view('bookings.index');
     }
