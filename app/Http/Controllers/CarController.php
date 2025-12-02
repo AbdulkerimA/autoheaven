@@ -12,8 +12,11 @@ class CarController extends Controller
 
         $cars = Car::with('owner','media')->paginate(10);
 
-        if(Auth::user()->profile->role == "owner")
-            return view('owner.cars.index');
+        // check if the user is authenticated first
+        if (Auth::check())
+            if(Auth::user()->profile->role == "owner")
+                return view('owner.cars.index');
+
         return view('cars.index',[
             'cars' => $cars,
         ]);
