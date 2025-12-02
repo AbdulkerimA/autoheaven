@@ -10,16 +10,33 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
+    /**
+     * display the booking page
+     */
+    public function index()
+    {
+        $bookings = Booking::where('customer_id',Auth::id())
+                        ->whereNotIn('status', ['completed', 'cancelled'])
+                        ->orderBy('created_at', 'desc')
+                        ->first();
+
+        return view('bookings.index');
+    }
+
+    /**
+     * store booking to the db
+     */
     public function store(Request $request)
     {
         // dd($request->post());
         // Validate form inputs
         $validated = $request->validate([
             'car_id'      => 'required|exists:cars,id',
-            'rentDate'    => 'required|date|after_or_equal:today',
+            'rentDate'    => 'required|date',//|after_or_equal:today',
             'returnDate'  => 'required|date|after:rentDate',
         ]);
 
+        // dd($validated);
         // Get authenticated user
         $customerId = Auth::id();
 

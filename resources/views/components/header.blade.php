@@ -6,6 +6,9 @@
         <div class="hidden md:flex items-center space-x-8 animate-fade-in">
             <a href="#home" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Home</a>
             <a href="/cars" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Cars</a>
+            @auth
+            <a href="/bookings" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Bookings</a>
+            @endauth
             <a href="#how-it-works" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">How It Works</a>
             <a href="/about" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">About</a>
             <a href="#contact" class="text-white hover:text-[#F5B800] transition-all duration-300 hover:scale-105">Contact</a>

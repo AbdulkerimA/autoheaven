@@ -60,4 +60,9 @@ Route::controller(CarController::class)->group(function (){
     Route::get('/cars','index');
 });
 
+// booking 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bookings',[BookingController::class,'index'])->name('booking.index');
+});
+
 require __DIR__.'/auth.php';
