@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Cars\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
@@ -18,44 +20,41 @@ class CarsTable
     {
         return $table
             ->columns([
-                TextColumn::make('owner_id')
+                TextColumn::make('owner.username')
+                    ->label('owner name')
                     ->numeric()
-                    ->sortable(),
-                TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('license_plate')
                     ->searchable(),
                 TextColumn::make('brand')
-                    ->searchable(),
-                TextColumn::make('category')
+                    ->searchable()
                     ->searchable(),
                 TextColumn::make('price_per_day')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->prefix('ETB '),
                 TextColumn::make('fuel_type')
                     ->searchable(),
                 TextColumn::make('transmission')
                     ->searchable(),
-                TextColumn::make('seats')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('year')
+                    ->label('build year')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('mileage')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('license_plate')
-                    ->searchable(),
                 TextColumn::make('availability_status')
+                    ->label('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                            'pending'    => 'warning',
+                            'available'   => 'success',
+                            'booked'   => 'danger',
+                            'maintenance'   => 'danger',
+                            'completed'  => 'primary',
+                            default      => 'gray',
+                        })
                     ->searchable(),
                 TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -66,6 +65,7 @@ class CarsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
