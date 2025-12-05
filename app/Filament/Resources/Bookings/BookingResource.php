@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Bookings;
 
 use App\Filament\Resources\Bookings\Pages\ManageBookings;
+use App\Filament\Widgets\TotalCars;
 use App\Models\Booking;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
@@ -26,6 +27,13 @@ class BookingResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Bookmark;
 
     protected static ?string $recordTitleAttribute = 'Bookings';
+
+    public static function getWidgets(): array
+    {
+        return [
+            TotalCars::class,
+        ];
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -58,7 +66,7 @@ class BookingResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('car_id')
+                TextEntry::make('car.brand')
                     ->numeric(),
                 TextEntry::make('customer_id')
                     ->numeric(),
@@ -84,33 +92,48 @@ class BookingResource extends Resource
         return $table
             ->recordTitleAttribute('Bookings')
             ->columns([
-                TextColumn::make('car_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('customer_id')
-                    ->numeric()
+                TextColumn::make('car.brand')
+                    ->label('Car Brand')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('customer.name')
+                    // ->lable('customer')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('start_date')
+                    ->label('pick up date')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('end_date')
+                    // ->lable('return date')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('total_price')
                     ->money()
                     ->sortable(),
                 TextColumn::make('status')
+                    ->label('booking status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending'    => 'warning',
+                        'confirmed'   => 'success',
+                        'cancelled'   => 'danger',
+                        'completed'  => 'primary',
+                        default      => 'gray',
+                    })
                     ->searchable(),
                 TextColumn::make('payment_status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending'      => 'danger',
+                        'paid'        => 'success',
+                        'refunded'    => 'info',
+                        'failed'      => 'warning',
+                        default       => 'gray',
+                    })
                     ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
