@@ -2,39 +2,40 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\User;
+use App\Models\Booking;
 use Filament\Widgets\ChartWidget;
 
-class RegesterdUsers extends ChartWidget
+class RentalsChart extends ChartWidget
 {
-    protected ?string $heading = 'Regesterd Users';
+    protected ?string $heading = 'Rentals Chart';
     protected ?string $pollingInterval = '10s';
-    protected static ?int $sortOrder = 3;
+    protected static ?int $sortOrder = 4;
+
 
     protected function getData(): array
     {
-        // Initialize 12 months with 0
+        // Initialize all 12 months with 0
         $monthlyTotals = array_fill(1, 12, 0);
 
-        // Get counts grouped by month (SQLite syntax)
-        $users = User::selectRaw("CAST(strftime('%m', created_at) AS INTEGER) as month, COUNT(*) as total")
+        // Fetch booking counts grouped by month (SQLite syntax)
+        $bookings = Booking::selectRaw("CAST(strftime('%m', created_at) AS INTEGER) as month, COUNT(*) as total")
             ->groupBy('month')
             ->orderBy('month')
             ->get();
 
-        // Fill monthlyTotals with actual data
-        foreach ($users as $user) {
-            $monthlyTotals[$user->month] = $user->total;
+        // Populate monthlyTotals array
+        foreach ($bookings as $booking) {
+            $monthlyTotals[$booking->month] = $booking->total;
         }
 
         // Convert to zero-indexed array for Filament chart
         $data = array_values($monthlyTotals);
-        // dd($data);
 
+        // dd($data);
         return [
             'datasets' => [
                 [
-                    'name' => 'Users',
+                    'name' => 'Rentals',
                     'data' => $data,
                 ],
             ],
@@ -44,6 +45,6 @@ class RegesterdUsers extends ChartWidget
 
     protected function getType(): string
     {
-        return 'line';
+        return 'bar';
     }
 }
