@@ -9,7 +9,8 @@ class RegesterdUsers extends ChartWidget
 {
     protected ?string $heading = 'Regesterd Users';
     protected ?string $pollingInterval = '10s';
-    protected static ?int $sortOrder = 3;
+    protected int | string | array $columnSpan = 2;
+    protected static ?int $sort = 3;
 
     protected function getData(): array
     {

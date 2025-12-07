@@ -9,7 +9,7 @@ class RentalsChart extends ChartWidget
 {
     protected ?string $heading = 'Rentals Chart';
     protected ?string $pollingInterval = '10s';
-    protected static ?int $sortOrder = 4;
+    protected static ?int $sort = 4;
 
 
     protected function getData(): array

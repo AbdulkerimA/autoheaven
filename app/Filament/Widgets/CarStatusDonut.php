@@ -8,9 +8,9 @@ use Filament\Widgets\ChartWidget;
 class CarStatusDonut extends ChartWidget
 {
     protected ?string $heading = 'Car Status Donut';
-    protected int | string | array $columnSpan = 1;
+    protected int | string | array $columnSpan = 1;//"full";
     protected ?string $pollingInterval = '10s';
-    protected static ?int $sortOrder = 5;
+    protected static ?int $sort = 5;
 
     protected function getData(): array
         {

@@ -11,7 +11,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 class TotalCars extends StatsOverviewWidget
 {
     protected ?string $pollingInterval = '10s';
-    protected static ?int $sortOrder = 2;
+    protected static ?int $sort = 2;
 
     protected function getStats(): array
     {
