@@ -12,10 +12,14 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Operation;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -38,27 +42,74 @@ class BookingResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextInput::make('car_id')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('customer_id')
-                    ->required()
-                    ->numeric(),
-                DatePicker::make('start_date')
-                    ->required(),
-                DatePicker::make('end_date')
-                    ->required(),
-                TextInput::make('total_price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                TextInput::make('status')
-                    ->required()
-                    ->default('pending'),
-                TextInput::make('payment_status')
-                    ->required()
-                    ->default('pending'),
+            ->components([  
+                Section::make('Booking Details')
+                ->description('Select car, customer and booking period')
+                ->icon('heroicon-o-calendar-days')
+                ->schema([
+                    Grid::make(1)->schema([
+
+                        Select::make('car_id')
+                            ->label('Car')
+                            ->relationship('car', 'brand')
+                            ->searchable()
+                            ->preload()
+                            ->required(fn ($operation) => $operation === 'create'),
+
+                        Select::make('customer_id')
+                            ->label('Customer')
+                            ->relationship('customer', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(fn ($operation) => $operation === 'create'),
+
+                        DatePicker::make('start_date')
+                            ->label('Pick-up Date')
+                            ->required()
+                            ->minDate(now())
+                            ->required(fn ($operation) => $operation === 'create'),
+
+                        DatePicker::make('end_date')
+                            ->label('Return Date')
+                            ->required()
+                            ->after('start_date')
+                            ->required(fn ($operation) => $operation === 'create'),
+                    ]),
+                ]),
+            Section::make('Payment & Status')
+                ->description('Booking and payment state')
+                ->icon('heroicon-o-credit-card')
+                ->schema([
+                    Grid::make(1)->schema([
+
+                        TextInput::make('total_price')
+                            ->label('Total Price')
+                            ->numeric()
+                            ->prefix('ETB')
+                            ->required(),
+
+                        Select::make('status')
+                            ->options([
+                                'pending'    => 'Pending',
+                                'confirmed'  => 'Confirmed',
+                                'cancelled'  => 'Cancelled',
+                                'completed'  => 'Completed',
+                            ])
+                            ->default('pending')
+                            ->required(),
+
+                        Select::make('payment_status')
+                            ->options([
+                                'pending'   => 'Pending',
+                                'paid'      => 'Paid',
+                                'refunded'  => 'Refunded',
+                                'failed'    => 'Failed',
+                            ])
+                            ->default('pending')
+                            ->required(),
+                    ]),
+                ])
+                ->collapsible(),
             ]);
     }
 
@@ -66,24 +117,76 @@ class BookingResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('car.brand')
-                    ->numeric(),
-                TextEntry::make('customer_id')
-                    ->numeric(),
-                TextEntry::make('start_date')
-                    ->date(),
-                TextEntry::make('end_date')
-                    ->date(),
-                TextEntry::make('total_price')
-                    ->money(),
-                TextEntry::make('status'),
-                TextEntry::make('payment_status'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                Section::make('Booking Overview')
+                ->description('Car, customer and booking period details')
+                ->icon('heroicon-o-calendar-days')
+                ->schema([
+                    Grid::make(3)->schema([
+
+                        TextEntry::make('car.brand')
+                            ->label('Car Brand')
+                            ->badge(),
+
+                        TextEntry::make('car.category')
+                            ->label('Category')
+                            ->badge(),
+
+                        TextEntry::make('customer.name')
+                            ->label('Customer'),
+
+                        TextEntry::make('start_date')
+                            ->label('Pick-up Date')
+                            ->date(),
+
+                        TextEntry::make('end_date')
+                            ->label('Return Date')
+                            ->date(),
+
+                        TextEntry::make('total_price')
+                            ->label('Total Price')
+                            ->money('ETB'),
+                    ]),
+                ])
+                ->collapsible(),
+
+            Section::make('Payment & Status')
+                ->description('Booking and payment state')
+                ->icon('heroicon-o-credit-card')
+                ->schema([
+                    Grid::make(3)->schema([
+
+                        TextEntry::make('status')
+                            ->label('Booking Status')
+                            ->badge()
+                            ->color(fn (string $state) => match ($state) {
+                                'pending'    => 'warning',
+                                'confirmed'  => 'success',
+                                'cancelled'  => 'danger',
+                                'completed'  => 'primary',
+                                default      => 'gray',
+                            }),
+
+                        TextEntry::make('payment_status')
+                            ->label('Payment Status')
+                            ->badge()
+                            ->color(fn (string $state) => match ($state) {
+                                'pending'   => 'warning',
+                                'paid'      => 'success',
+                                'refunded'  => 'info',
+                                'failed'    => 'danger',
+                                default     => 'gray',
+                            }),
+
+                        TextEntry::make('created_at')
+                            ->label('Booked At')
+                            ->dateTime(),
+
+                        TextEntry::make('updated_at')
+                            ->label('Last Updated')
+                            ->dateTime(),
+                    ]),
+                ])
+                ->collapsed(),
             ]);
     }
 
