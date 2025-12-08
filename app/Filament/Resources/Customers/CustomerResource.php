@@ -19,10 +19,14 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -50,57 +54,79 @@ class CustomerResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->required(),
-                TextInput::make('username')
-                    ->required(),
-                TextInput::make('email')
-                    ->label('Email address')
-                    ->email()
-                    ->required(),
-                DateTimePicker::make('email_verified_at'),
-                TextInput::make('password')
-                    ->password()
-                    ->required(),
-                TextInput::make('role')
-                    ->required()
-                    ->default('customer'),
-                TextInput::make('profile_picture'),
-                TextInput::make('phone')
-                    ->tel(),
-                Textarea::make('address')
-                    ->columnSpanFull(),
-            ]);
+                Section::make('Basic Information')
+                    ->schema([
+                        Grid::make(2)->schema([
+                            TextInput::make('name')
+                                ->required(fn ($operation) => $operation === 'create'),
+
+                            TextInput::make('username')
+                                ->required(fn ($operation) => $operation === 'create'),
+
+                            TextInput::make('email')
+                                ->label('Email address')
+                                ->email()
+                                ->required(fn ($operation) => $operation === 'create'),
+
+                            // DateTimePicker::make('email_verified_at'),
+                        ]),
+                    ]),
+                Section::make('Security')
+                    ->schema([
+                        // TextInput::make('password')
+                        //     ->password(),
+                            // ->required(fn ($operation) => $operation === 'create'),
+
+                        TextInput::make('role')
+                            ->default('admin')
+                            ->required(fn ($operation) => $operation === 'create'),
+                    ]),
+                Section::make('Contact & Profile')
+                    ->schema([
+                        TextInput::make('profile.profile_picture'),
+                        TextInput::make('profile.phone')->tel(),
+                        // Textarea::make('profileaddress')->columnSpanFull(),
+                    ]),
+        ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('username'),
-                TextEntry::make('email')
-                    ->label('Email address'),
-                TextEntry::make('email_verified_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('role'),
-                TextEntry::make('profile_picture')
-                    ->placeholder('-'),
-                TextEntry::make('phone')
-                    ->placeholder('-'),
-                TextEntry::make('address')
-                    ->placeholder('-')
-                    ->columnSpanFull(),
-                TextEntry::make('deleted_at')
-                    ->dateTime()
-                    ->visible(fn (User $record): bool => $record->trashed()),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                Section::make('Basic Information')->schema([
+                    TextEntry::make('name'),
+                    TextEntry::make('username'),
+                    TextEntry::make('email')->label('Email address'),
+                    // // TextEntry::make('email_verified_at')
+                    //     ->dateTime()
+                    //     ->placeholder('-'),
+                    TextEntry::make('role'),
+                ]),
+
+                Section::make('Contact & Profile')->schema([
+                    ImageEntry::make('profile.profile_picture')
+                        ->circular()
+                        ->disk('public')
+                        ->imageSize(60)
+                        ->placeholder('-'),
+                    TextEntry::make('profile.phone')
+                        ->placeholder('-'),
+                    TextEntry::make('profile.city')->placeholder('-')
+                        ->columnSpanFull(),
+                ]),
+
+                Section::make('System Info')->schema([
+                    TextEntry::make('deleted_at')
+                        ->dateTime()
+                        ->visible(fn ($record) => $record->trashed()),
+                    TextEntry::make('created_at')
+                        ->dateTime()
+                        ->placeholder('-'),
+                    TextEntry::make('updated_at')
+                        ->dateTime()
+                        ->placeholder('-'),
+                ]),
             ]);
     }
 
@@ -109,6 +135,12 @@ class CustomerResource extends Resource
         return $table
             ->recordTitleAttribute('admins')
             ->columns([
+                ImageColumn::make('profile.profile_picture')
+                    ->label('Profile')
+                    ->default('-')
+                    ->disk('public')
+                    ->circular()
+                    ->imageSize(45),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('username')
@@ -116,34 +148,17 @@ class CustomerResource extends Resource
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('role')
+                TextColumn::make('profile.role')
                     ->searchable(),
-                TextColumn::make('profile_picture')
+                TextColumn::make('prfile.phone')
                     ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
+                // EditAction::make(),
                 DeleteAction::make(),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),
@@ -175,6 +190,8 @@ class CustomerResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('role','customer');
+            ->whereHas('profile',function($query){
+                $query->where('role','customer');
+            });
     }
 }
