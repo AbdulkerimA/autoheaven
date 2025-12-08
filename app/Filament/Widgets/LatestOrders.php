@@ -27,6 +27,7 @@ class LatestOrders extends TableWidget
             ->columns([
                 ImageColumn::make('customer.profile.profile_picture')
                     ->label('user prfile')
+                    ->disk('public')
                     ->imageSize(45)
                     ->circular(),
                 TextColumn::make('customer.username')
@@ -48,7 +49,11 @@ class LatestOrders extends TableWidget
                     ->action(function ($comment) {
                         $comment->update(['visibility' => true]);
                     }),
-                ViewAction::make('view comment'),
+                ViewAction::make('view comment')
+                    ->modalWidth('lg')
+                    ->modalContent(fn ($record) => view('filament.pages.widgets.review-infolist', [
+                        'record' => $record,
+                    ])),
                 DeleteAction::make('delete'),
             ])
             ->toolbarActions([
