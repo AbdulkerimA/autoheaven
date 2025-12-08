@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Car;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,7 +23,7 @@ class CarFilter extends Component
 
     public $showModal = false;
     public $selectedCar;
-    protected $listeners = ['open-rent-modal' => 'openModal'];
+    protected $listeners = ['open-rent-modal' => 'openModal','open-review-modal' => 'openReviewModal'];
 
     protected $queryString = [
         'search',
@@ -34,6 +35,10 @@ class CarFilter extends Component
         'sort',
         'page'
     ];
+
+    public $showReviewModal = false;
+    public $rating = 0;
+    public $comment = '';
 
     public function updating($field)
     {
@@ -80,6 +85,38 @@ class CarFilter extends Component
 
     public function closeModal(){
         $this->showModal = false;
+    }
+
+    public function openReviewModal($carId)
+    {
+        $this->selectedCar = Car::findOrFail($carId);
+        $this->rating = 0;
+        $this->comment = '';
+        $this->showReviewModal = true;
+    }
+
+    public function closeReviewModal()
+    {
+        $this->showReviewModal = false;
+    }
+
+
+    public function submitReview()
+    {
+        $this->validate([
+            'rating'  => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:500',
+        ]);
+
+        $this->selectedCar->reviews()->create([
+            'customer_id' => Auth::id(),
+            'rating'      => $this->rating,
+            'comment'     => $this->comment,
+        ]);
+
+        $this->closeReviewModal();
+
+        session()->flash('success', 'Review submitted successfully!');
     }
 
 }

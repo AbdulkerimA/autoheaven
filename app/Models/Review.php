@@ -15,7 +15,7 @@ class Review extends Model
         'car_id',
         'customer_id',
         'rating',
-        'comment',
+        'comment', 
     ];
 
     /** -------------------------

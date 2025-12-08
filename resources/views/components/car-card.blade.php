@@ -128,7 +128,8 @@
         <!-- Rating & Price -->
         <div class="flex items-center justify-between mb-4">
             @php
-                $rating = $car['rating'];
+                // dump($car->reviews);
+                $rating = $car->reviews?->avg('rating') ?? 1;
                 $full = floor($rating);
                 $half = ($rating - $full) > 0;
                 $empty = 5 - ceil($rating);
@@ -170,8 +171,17 @@
                 class="btn-gold flex-1 px-4 py-3 rounded-lg text-sm 
                 {{ $car['availability_status'] != 'available'? 'opacity-50 cursor-not-allowed' : '' }}"
                 {{ $car['availability_status'] != 'available' ? 'disabled' : '' }}>
-                {{ $car['availability_status'] == 'available' ? 'bookings' : 'Unavailable' }}
+                {{ $car['availability_status'] == 'available' ? 'book now' : 'Unavailable' }}
             </button>
+
+            @if (Auth::user()->profile->role == 'customer')
+                <button 
+                    wire:click="$dispatch('open-review-modal', { carId: {{ $car->id }} })"
+                    class="btn-gold flex-1 px-4 py-3 rounded-lg text-sm 
+                    {{ $car['availability_status'] != 'available'? 'hidden' : '' }}">
+                    {{ $car['availability_status'] == 'available' ? 'review' : 'Unavailable' }}
+                </button>
+            @endif
 
             @can('viewAny',$car)
                 <button type="submit" form="deleteForm"
