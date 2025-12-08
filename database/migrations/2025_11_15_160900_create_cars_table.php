@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('year');
             $table->integer('mileage')->nullable();
             $table->string('license_plate')->unique();
-            $table->enum('availability_status', ['available','booked','maintenance','pending'])->default('available');
+            $table->enum('availability_status', ['available','booked','maintenance','pending'])->default('peding');
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
