@@ -77,6 +77,7 @@ class MiniBusResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('category','mini bus');
+            ->where('category','mini bus')
+            ->orderByDesc('created_at');
     }
 }

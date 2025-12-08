@@ -227,10 +227,6 @@ class SedanResource extends Resource
                             default      => 'gray',
                         })
                     ->searchable(),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
@@ -245,15 +241,17 @@ class SedanResource extends Resource
                     ->action(function ($record) {
                         $record->update(['availability_status' => 'available']);
                     }),
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make('edit'),
+                DeleteAction::make('delete'),
+                ForceDeleteAction::make('force delete'),
+                RestoreAction::make('restore'),
+                ViewAction::make('view'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
+                    DeleteBulkAction::make('delete all'),
+                    ForceDeleteBulkAction::make('force delete'),
+                    RestoreBulkAction::make('restore'),
                 ]),
             ]);
     }
@@ -276,7 +274,8 @@ class SedanResource extends Resource
      public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('category','Sedan');
+            ->where('category','Sedan')
+            ->orderByDesc('created_at');
     }
 
     // upload file request handler

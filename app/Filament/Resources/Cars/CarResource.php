@@ -8,7 +8,6 @@ use App\Filament\Resources\Cars\Pages\ListCars;
 use App\Filament\Resources\Cars\Pages\ViewCar;
 use App\Filament\Resources\Cars\Schemas\CarForm;
 use App\Filament\Resources\Cars\Schemas\CarInfolist;
-use App\Filament\Resources\Cars\Tables\CarsTable;
 use App\Models\Car;
 use App\Models\CarMedia;
 use BackedEnum;
@@ -19,6 +18,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Resource;
@@ -89,10 +89,6 @@ class CarResource extends Resource
                             default      => 'gray',
                         })
                     ->searchable(),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
@@ -107,15 +103,17 @@ class CarResource extends Resource
                     ->action(function ($record) {
                         $record->update(['availability_status' => 'available']);
                     }),
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make('edit'),
+                DeleteAction::make('delete'),
+                ForceDeleteAction::make('force delete'),
+                RestoreAction::make('restore'),
+                ViewAction::make('view'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
+                    DeleteBulkAction::make('delete all'),
+                    ForceDeleteBulkAction::make('force delete'),
+                    RestoreBulkAction::make('restore'),
                 ]),
             ]);
     }
@@ -144,6 +142,13 @@ class CarResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->orderByDesc('created_at');
+    }
+    
 
     public static function afterCreate(Form $form, Model $record)
     {

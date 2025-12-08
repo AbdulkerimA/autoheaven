@@ -81,7 +81,8 @@ class SUVResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('category','SUV');
+            ->where('category','SUV')
+            ->orderByDesc('created_at');
     }
 
     // upload file request handler

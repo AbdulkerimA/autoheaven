@@ -7,7 +7,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -54,10 +56,6 @@ class SUVSTable
                             default      => 'gray',
                         })
                     ->searchable(),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
@@ -72,16 +70,17 @@ class SUVSTable
                     ->action(function ($record) {
                         $record->update(['availability_status' => 'available']);
                     }),
-                ViewAction::make(),
-                // ViewSUV::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make('edit'),
+                DeleteAction::make('delete'),
+                ForceDeleteAction::make('force delete'),
+                RestoreAction::make('restore'),
+                ViewAction::make('view'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
+                    DeleteBulkAction::make('delete all'),
+                    ForceDeleteBulkAction::make('force delete'),
+                    RestoreBulkAction::make('restore'),
                 ]),
             ]);
     }
