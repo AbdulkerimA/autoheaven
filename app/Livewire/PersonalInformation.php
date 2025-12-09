@@ -30,15 +30,15 @@ class PersonalInformation extends Component
         $this->fullName = $user->name;
         $this->userName = $user->username;
         $this->email = $user->email;
-        $this->tel = $user->profile->phone;
-        $this->street = $user->profile->street;
-        $this->city = $user->profile->city;
-        $this->region = $user->profile->region;
-        $this->dob = $user->profile->date_of_birth;
-        $this->license_number = $user->profile->license_number;
-        $this->emergency_name = $user->profile->emergency_name;
-        $this->emergency_phone = $user->profile->emergency_phone;
-        $this->gender = $user->profile->gender;
+        $this->tel = $user->profile?->phone ?? '-';
+        $this->street = $user->profile?->street ?? '-';
+        $this->city = $user->profile?->city ?? '-';
+        $this->region = $user->profile?->region ?? '-';
+        $this->dob = $user->profile?->date_of_birth ?? '-';
+        $this->license_number = $user->profile?->license_number ?? '-';
+        $this->emergency_name = $user->profile?->emergency_name ?? '-';
+        $this->emergency_phone = $user->profile?->emergency_phone ?? '-';
+        $this->gender = $user->profile?->gender ?? '-';
 
         if (session()->has('errors') && session('errors')->hasBag('personalInfoUpdate')) {
             $this->showModal = true;

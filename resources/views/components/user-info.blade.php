@@ -5,7 +5,7 @@
         <!-- Profile Photo -->
         <div class="relative golden-glow">
             <img id="profileImage"
-                src="{{ asset('storage/'.Auth::user()->profile->profile_picture) }}"
+                src="{{ asset('storage/'.Auth::user()->profile?->profile_picture) }}"
                 alt="Profile Photo" class="profile-photo"> 
                 <button id="photoUploadBtn"
                 class="absolute bottom-0 right-0 bg-accent hover:bg-warm-amber text-primary p-2 rounded-full transition-all duration-300 transform hover:scale-110">
