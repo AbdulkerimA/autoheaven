@@ -30,9 +30,9 @@ class ReviewPolicy
      */
     public function create(User $user, Car $car): bool
     {
-        return ! $user->bookings()
+        return $user->bookings()
             ->where('car_id', $car->id)
-            ->exists();
+            ->exists() && $user->profile->role == 'customer';
     }
 
     /**

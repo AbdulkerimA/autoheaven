@@ -30,7 +30,7 @@ class CarOwnerPolicy
      */
     public function create(User $user): bool
     {
-        return $user->profile->role === 'owner';
+        return $user->profile->role === 'owner'; 
     }
 
     /**
