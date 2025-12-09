@@ -116,6 +116,31 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        <!-- Agree to terms and services -->
+        <div class="mt-4 flex gap-2">
+            <input
+                id="terms"
+                type="checkbox"
+                name="terms"
+                value="1"
+                class="rounded border-gray-300 focus:ring focus:ring-opacity-50"
+                required
+            >
+
+            <label for="terms"
+                class="block text-sm font-medium mb-2"
+                style="color: var(--color-dark-text); font-family: Inter, system-ui, sans-serif;"
+            >
+                I agree to the 
+                <span class="underline text-indigo-600">
+                    <a href="/terms">Terms and Services </a>
+                </span> 
+            </label>
+
+            <x-input-error :messages="$errors->get('terms')" class="mt-2" />
+        </div>
+
+
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-400 hover:text-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
