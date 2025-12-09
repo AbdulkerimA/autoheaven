@@ -16,7 +16,7 @@ return new class extends Migration
 
             // Link to users
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('role',['owner','customer'])->default('user');
+            $table->enum('role',['owner','customer','admin'])->default('user');
             // Profile photo
             $table->string('profile_picture')->nullable();
             // Personal info
