@@ -174,14 +174,16 @@
                 {{ $car['availability_status'] == 'available' ? 'book now' : 'Unavailable' }}
             </button>
 
-            @if (Auth::user()->profile->role == 'customer')
-                <button 
-                    wire:click="$dispatch('open-review-modal', { carId: {{ $car->id }} })"
-                    class="btn-gold flex-1 px-4 py-3 rounded-lg text-sm 
-                    {{ $car['availability_status'] != 'available'? 'hidden' : '' }}">
-                    {{ $car['availability_status'] == 'available' ? 'review' : 'Unavailable' }}
-                </button>
-            @endif
+            @auth
+                @can('create', [App\Models\Review::class, $car])
+                    <button
+                        wire:click="$dispatch('open-review-modal', { carId: {{ $car->id }} })"
+                        class="btn-gold flex-1 px-4 py-3 rounded-lg text-sm
+                            {{ $car->availability_status != 'available' ? 'hidden' : '' }}">
+                        Review
+                    </button>
+                @endcan
+            @endauth
 
             @can('viewAny',$car)
                 <button type="submit" form="deleteForm"

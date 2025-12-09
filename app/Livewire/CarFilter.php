@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Car;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -103,11 +104,14 @@ class CarFilter extends Component
 
     public function submitReview()
     {
+        $this->authorize('create', [Review::class, $this->selectedCar]);
+
         $this->validate([
             'rating'  => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:500',
         ]);
 
+        
         $this->selectedCar->reviews()->create([
             'customer_id' => Auth::id(),
             'rating'      => $this->rating,
