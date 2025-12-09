@@ -11,7 +11,7 @@
 <body
     class="font-body bg-dark-bg light:bg-light-bg text-dark-text light:text-light-text transition-all duration-500 min-h-screen">
     <!-- Header -->
-    <x-header />
+    {{-- <x-header /> --}}
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-6 py-12">
         <!-- Profile Form Card -->
