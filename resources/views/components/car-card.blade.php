@@ -147,7 +147,7 @@
                         <span class="text-gray-500">★</span>
                     @endfor
                 </div>
-                <span class="text-gray-400 text-sm">{{ $rating }}</span>
+                <span class="text-gray-400 text-sm">{{ number_format($rating,1) }}</span>
             </div>
 
             <div class="text-right">
