@@ -15,7 +15,7 @@ class PaymentController extends Controller
         $txRef = $request->query('tx_ref');
 
         if (!$txRef) {
-            return redirect()->route('bookings.index')
+            return redirect()->route('booking.index')
                 ->with('error', 'Invalid payment reference.');
         }
 
