@@ -107,12 +107,18 @@
           </div>
 
           <div class="mt-4">
-            <button 
-              wire:click="payNow"
-              class="btn-secondary w-full py-2 rounded-xl mb-2">
-              Pay Now
-            </button>
+            @if($paymentStatus !== 'paid')
+              <button 
+                wire:click="payNow"
+                class="btn-secondary w-full py-2 rounded-xl mb-2">
+                Pay Now
+              </button>
+            @endif
 
+            @if(
+                $booking->status === 'pending' ||
+                ($booking->status === 'confirmed' && $paymentStatus !== 'paid')
+            )
             <button 
               wire:click="cancelBooking"
               wire:loading.attr="disabled"
@@ -120,12 +126,29 @@
               <span wire:loading.remove>Cancel Booking</span>
               <span wire:loading>Processing...</span>
             </button>
+            @endif
+
           </div>
 
         </div>
       </div>
 
     </section>
+    {{-- chapa payment form  --}}
+    <form method="POST"
+      action="https://api.chapa.co/v1/hosted/pay"
+      class="hidden"
+      id="payment_form">
+
+      <input type="hidden" name="public_key" value="{{ config('chapa.public_key') }}">
+      <input type="hidden" name="tx_ref" id="tx_ref">
+      <input type="hidden" name="amount" value="{{ $booking->total_price }}">
+      <input type="hidden" name="currency" value="ETB">
+      <input type="hidden" name="email" value="{{ $booking->customer->email }}">
+      <input type="hidden" name="first_name" value="{{ $booking->customer->username }}">
+      <input type="hidden" name="last_name" value="Customer">
+      <input type="hidden" name="return_url" value="{{ route('payment.verify') }}">
+  </form>
 
     <!-- Additional sections unchanged (owner info, timeline etc.) -->    
 @else
@@ -135,4 +158,11 @@
 @endif   
 <livewire:notification-widget />
 </main>
+
+<script>
+  document.addEventListener('submit-payment-form', e => {
+      document.getElementById('tx_ref').value = e.detail.txRef;
+      document.getElementById('payment_form').submit();
+  });
+</script>
 

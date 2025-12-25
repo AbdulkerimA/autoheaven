@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\DashBoard\CarController as DashBoardCarController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\user\PersonalInformationController;
 use App\Http\Controllers\user\ProfilePicController;
@@ -57,12 +58,15 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::controller(CarController::class)->group(function (){
-    Route::get('/cars','index');
+    Route::get('/cars','index')->name('cars.index');
 });
 
 // booking 
 Route::middleware(['auth'])->group(function () {
     Route::get('/bookings',[BookingController::class,'index'])->name('booking.index');
 });
+Route::get('/payment/verify', [PaymentController::class, 'verify'])
+    ->name('payment.verify');
+
 
 require __DIR__.'/auth.php';

@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class TrackBooking extends Component
@@ -14,6 +16,7 @@ class TrackBooking extends Component
     public $paymentStatus;
 
     public $booking;
+
 
     public function mount()
     {
@@ -29,31 +32,60 @@ class TrackBooking extends Component
             $this->returnDate = $this->booking->end_date;
         }
     }
+    
+    // public function getStatusProperty()
+    // {
+    //     return $this->booking?->status;
+    // }
+
+    // public function getPaymentStatusProperty()
+    // {
+    //     return $this->booking?->payment_status;
+    // }
 
     public function cancelBooking()
     {
-        if (!$this->booking) return;
+        if (
+            !$this->booking ||
+            in_array($this->booking->status, ['completed', 'ongoing']) ||
+            $this->booking->payment_status === 'paid'
+        ) {
+            $this->dispatch('notify', 'This booking cannot be cancelled.', 'error');
+            return;
+        }
+
+        DB::transaction(function () {
+            $this->booking->update(['status' => 'cancelled']);
+            $this->booking->car()->update(['availability_status' => 'available']);
+        });
 
         $this->status = 'cancelled';
-        $this->booking->status = 'cancelled';
-        $this->booking->car->availability_status = 'available';
-        $this->booking->save();
-        $this->booking->car->save();
 
         $this->dispatch('notify', 'Booking cancelled successfully!', 'success');
 
-        redirect('/cars')->with('message','booking cancelled');
+        return redirect()->route('cars.index');
     }
+
 
     public function payNow()
     {
-        // integrate payment gateway later
-        $this->paymentStatus = "paid";
-        // redirect to payment page
-        $this->booking->payment_status = "paid";
-        $this->booking->save();
+        if (!$this->booking || $this->booking->payment_status === 'paid') {
+            $this->dispatch('notify', 'This booking is already paid.', 'error');
+            return;
+        }
+
+        if (in_array($this->booking->status, ['pending', 'cancelled','rejected'])) {
+            $this->dispatch('notify', 'Payment is not allowed at this stage.', 'error');
+            return;
+        }
+
+        $txRef = 'BOOKING-' . $this->booking->id . '-' . Str::uuid();
         
-        $this->dispatch('notify', 'Payment completed successfully!', 'success');
+        // $this->booking->update([
+        //     'tx_ref' => $txRef,
+        // ]);
+
+        $this->dispatch('submit-payment-form', txRef: $txRef);
     }
 
 
