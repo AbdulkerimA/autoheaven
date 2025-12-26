@@ -147,7 +147,7 @@
       <input type="hidden" name="email" value="{{ $booking->customer->email }}">
       <input type="hidden" name="first_name" value="{{ $booking->customer->username }}">
       <input type="hidden" name="last_name" value="Customer">
-      <input type="hidden" name="return_url" value="{{ route('payment.verify') }}">
+      <input type="hidden" name="return_url" value="http://127.0.0.1:8000/payment/verify?tx_ref={{ $txRef }}">
   </form>
 
     <!-- Additional sections unchanged (owner info, timeline etc.) -->    

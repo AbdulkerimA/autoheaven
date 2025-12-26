@@ -16,6 +16,7 @@ class TrackBooking extends Component
     public $paymentStatus;
 
     public $booking;
+    public $txRef;
 
 
     public function mount()
@@ -79,13 +80,13 @@ class TrackBooking extends Component
             return;
         }
 
-        $txRef = 'BOOKING-' . $this->booking->id . '-' . Str::uuid();
+        $this->txRef = 'BOOKING-' . $this->booking->id . '-' . Str::uuid();
         
         // $this->booking->update([
         //     'tx_ref' => $txRef,
         // ]);
 
-        $this->dispatch('submit-payment-form', txRef: $txRef);
+        $this->dispatch('submit-payment-form', txRef: $this->txRef);
     }
 
 
