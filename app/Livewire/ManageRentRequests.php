@@ -23,7 +23,7 @@ class ManageRentRequests extends Component
     {
         // Get all booked cars of the current owner
         $this->cars = Car::where('owner_id', Auth::id())
-            ->where('availability_status', 'booked')
+            // ->where('availability_status', 'booked')
             ->orderByDesc('created_at')
             ->pluck('id');
 
