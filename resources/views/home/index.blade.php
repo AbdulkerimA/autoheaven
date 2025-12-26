@@ -18,7 +18,7 @@
                         Rent a Car
                     </button>
                     <button class="btn-outline bg-white/10 backdrop-blur-sm font-bold px-10 py-4 rounded-xl text-lg border-white/30 text-white hover:bg-[#F59E0B] hover:text-primary"
-                            onclick="window.location = '/owners'">
+                            onclick="window.location = '/owner'">
                         List Your Car
                     </button>
                 </div>
