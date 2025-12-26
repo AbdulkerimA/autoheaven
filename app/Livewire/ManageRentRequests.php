@@ -24,11 +24,13 @@ class ManageRentRequests extends Component
         // Get all booked cars of the current owner
         $this->cars = Car::where('owner_id', Auth::id())
             ->where('availability_status', 'booked')
+            ->orderByDesc('created_at')
             ->pluck('id');
 
         // Get bookings for these cars
         $this->bookings = Booking::with('car.media', 'customer')
             ->whereIn('car_id', $this->cars)
+            ->orderByDesc('created_at')
             ->get();
 
         $this->filteredRequests = $this->bookings;
@@ -88,7 +90,7 @@ class ManageRentRequests extends Component
 
     public function completed($id)
     {
-        $booking = Booking::find($id);
+        $booking = Booking::findOrFail($id);
         if ($booking) {
             $booking->status = 'completed';
             $booking->car->availability_status = 'available';
@@ -106,7 +108,7 @@ class ManageRentRequests extends Component
 
     public function remove($id)
     {
-        $booking = Booking::find($id);
+        $booking = Booking::findOrFail($id);
         if ($booking) {
             $booking->delete();
 
@@ -116,7 +118,7 @@ class ManageRentRequests extends Component
 
     public function acceptRequest($id)
     {
-        $booking = Booking::find($id);
+        $booking = Booking::findOrFail($id);
         if ($booking) {
             $booking->status = 'confirmed';
             $booking->save();
@@ -127,7 +129,7 @@ class ManageRentRequests extends Component
 
     public function rejectRequest($id)
     {
-        $booking = Booking::find($id);
+        $booking = Booking::findOrFirst($id);
         if ($booking) {
             $booking->status = 'cancelled';
             $booking->car->availability_status = 'available';
