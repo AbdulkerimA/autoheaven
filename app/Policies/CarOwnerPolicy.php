@@ -14,7 +14,7 @@ class CarOwnerPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->profile->role == 'owner';
+        return $user->profile->role == 'owner' || $user->role == 'admin';
     }
 
     /**
@@ -30,7 +30,7 @@ class CarOwnerPolicy
      */
     public function create(User $user): bool
     {
-        return $user->profile->role === 'owner'; 
+        return $user->profile->role === 'owner' || $user->role == 'admin'; 
     }
 
     /**
@@ -38,7 +38,7 @@ class CarOwnerPolicy
      */
     public function update(User $user,Car $car): bool
     {
-        return $user->id == $car->owner_id;
+        return $user->id == $car->owner_id || $user->role == 'admin';
     }
 
     /**
@@ -46,7 +46,7 @@ class CarOwnerPolicy
      */
     public function delete(User $user,Car $car): bool
     {
-        return $user->id == $car->owner_id;
+        return $user->id == $car->owner_id || $user->role == 'admin';
     }
 
     /**
@@ -63,6 +63,6 @@ class CarOwnerPolicy
     public function forceDelete(User $user,Car $car): bool
     {
         return $user->profile->role == 'owner' 
-               && $car->owner_id == $user->id;
+               && $car->owner_id == $user->id || $user->role == 'admin';
     }
 }
